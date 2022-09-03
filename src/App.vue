@@ -2,7 +2,7 @@
   <div>
     <nav v-if="user !== null">
       <router-link to="/">Home</router-link> |
-      <router-link to="/auth">Sign Out</router-link> |
+      <router-link to="/auth" @click="signOut">Sign Out</router-link> |
     </nav>
     <router-view />
   </div>
@@ -18,7 +18,7 @@ export default {
     ...mapState(userStore, ['user']),
   },
   methods: {
-    ...mapActions(userStore, ['fetchUser']),
+    ...mapActions(userStore, ['fetchUser', 'signOut']),
   },
   async created() {
     try {
@@ -32,6 +32,9 @@ export default {
     } catch (e) {
       console.error(e);
     }
+  },
+  signOut() {
+    this.user = !this.user;
   },
 };
 </script>
