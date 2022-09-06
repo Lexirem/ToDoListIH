@@ -1,16 +1,17 @@
 <template>
   <div class="auth">
     <h2><b>Sign Up</b></h2>
-    <form class="form" method="post">
+    <form class="form" method="post" @submit.prevent="handleSignUp">
       <label for="email">Email:
-        <input type="email" name="email" id="email" placeholder="Your email">
+        <input type="email" v-model="email" placeholder="Your email" required>
       </label>
       <label for="password">Password:
-        <input type="password" name="password" placeholder="********">
+        <input type="password" v-model="password" placeholder="********" required>
       </label>
       <label for="password">Confirm your Password:
-        <input type="password" name="password" placeholder="********">
+        <input type="password" v-model="password" placeholder="********">
       </label>
+      <div v-if="passwordError">{{ passwordError }}</div>
     </form>
   </div>
 </template>

@@ -27,9 +27,14 @@ export default {
     ...mapActions(userStore, ['signUp', 'signIn']),
     handleSignUp() {
       const userData = {
-        email: 'me.vallribera@gmail.com',
-        password: 'pruebasignup',
+        email: '',
+        password: '',
       };
+      this.passwordError = this.password.length > 6 ? '' : 'Password should have more than 6 characters';
+      if (!this.passwordError) {
+        console.log(this.email);
+        console.log(this.password);
+      }
       this.signUp(userData.email, userData.password);
     },
     handleSignIn() {

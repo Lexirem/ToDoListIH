@@ -35,17 +35,21 @@ export default {
   },
   signOut() {
     this.user = !this.user;
+    console.log('usuario desconectado');
   },
 };
 </script>
 
 <style>
+body {
+  background-image: url('../src/assets/star-wars-backgrounds-25.jpeg');
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #fff;
 }
 
 nav {
@@ -54,10 +58,10 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #fff;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: red;
 }
 </style>

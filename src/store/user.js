@@ -29,7 +29,8 @@ export default defineStore('userStore', {
       if (error) throw error;
     },
     signOut() {
-      this.user = !this.user;
+      this.user = !this.user.supabase.auth.token.accessTokens;
+      console.log('usuario desconectado');
     },
   },
   persist: {
