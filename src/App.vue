@@ -1,42 +1,16 @@
 <template>
   <div>
-    <nav v-if="user !== null">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/auth" @click="signOut">Sign Out</router-link> |
-    </nav>
+    <NavBar />
     <router-view />
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia';
-import userStore from '@/store/user';
+import NavBar from './components/NavBar.vue';
 
 export default {
   name: 'App',
-  computed: {
-    ...mapState(userStore, ['user']),
-  },
-  methods: {
-    ...mapActions(userStore, ['fetchUser', 'signOut']),
-  },
-  async created() {
-    try {
-      await this.fetchUser();
-      console.log(this.user);
-      if (!this.user) {
-        this.$router.push({ path: '/auth' });
-      } else {
-        this.$router.push({ path: '/' });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  },
-  signOut() {
-    this.user = !this.user;
-    console.log('usuario desconectado');
-  },
+  components: { NavBar },
 };
 </script>
 
@@ -49,7 +23,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #fff;
+  color: #FFFF00;
 }
 
 nav {
@@ -58,10 +32,10 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #fff;
+  color: #FFFF00;
 }
 
 nav a.router-link-exact-active {
-  color: red;
+  color: #FFFF00;
 }
 </style>

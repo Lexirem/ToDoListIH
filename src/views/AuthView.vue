@@ -27,13 +27,13 @@ export default {
     ...mapActions(userStore, ['signUp', 'signIn']),
     handleSignUp() {
       const userData = {
-        email: '',
-        password: '',
+        email: this.emailValue,
+        password: this.passwordValue,
       };
       this.passwordError = this.password.length > 6 ? '' : 'Password should have more than 6 characters';
       if (!this.passwordError) {
-        console.log(this.email);
-        console.log(this.password);
+        console.log(this.emailValue);
+        console.log(this.passwordValue);
       }
       this.signUp(userData.email, userData.password);
     },
@@ -43,14 +43,6 @@ export default {
         password: 'pruebasignup',
       };
       this.signIn(userData.email, userData.password);
-    },
-  },
-  watch: {
-    user() {
-      if (this.user) {
-        console.log(this.user);
-        this.$router.push({ path: '/' });
-      }
     },
   },
 };

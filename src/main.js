@@ -3,4 +3,10 @@ import { createPinia } from 'pinia';
 import App from './App.vue';
 import router from './router';
 
-createApp(App).use(router).use(createPinia()).mount('#app');
+const pinia = createPinia();
+pinia.use(({ store }) => {
+  /* eslint no-param-reassign: "error" */
+  store.router = router;
+});
+
+createApp(App).use(pinia).use(router).mount('#app');

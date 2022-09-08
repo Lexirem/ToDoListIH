@@ -8,9 +8,18 @@ export default defineStore('userStore', {
   }),
 
   actions: {
+    setUser(user) {
+      if (user) {
+        this.user = user;
+        this.router.push('/');
+      } else {
+        this.user = null;
+        this.router.push('/auth');
+      }
+    },
     async fetchUser() {
       const user = await supabase.auth.user();
-      this.user = user;
+      this.setUser(user);
     },
     async signUp(email, password) {
       const { user, error } = await supabase.auth.signUp({
@@ -18,19 +27,20 @@ export default defineStore('userStore', {
         password,
       });
       if (error) throw error;
-      if (user) this.user = user;
+      if (user) this.setUser(user);
     },
     async signIn(email, password) {
       const { user, error } = await supabase.auth.signIn({
         email,
         password,
       });
-      if (user) this.user = user;
       if (error) throw error;
+      if (user) this.setUser(user);
     },
-    signOut() {
-      this.user = !this.user.supabase.auth.token.accessTokens;
-      console.log('usuario desconectado');
+    async signOut() {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      this.setUser(null);
     },
   },
   persist: {
