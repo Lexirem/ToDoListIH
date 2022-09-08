@@ -1,10 +1,10 @@
 <template>
   <div>
     <h1>Esta es la pagina de SignUp-SingIn</h1>
-    <SignUp />
-    <!-- <SingIn /> -->
+    <SignUp v-if=" changeForm == 'signUp' " @modifyChangeForm="modifyForm" />
+    <SignIn v-if=" changeForm == 'signIn' "/>
     <button @click="handleSignUp">Sign Up</button>
-    <button @click="handleSignIn">Sign In</button>
+    <!-- <button @click="handleSignIn">Sign In</button> -->
   </div>
 </template>
 
@@ -12,13 +12,18 @@
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/store/user';
 import SignUp from '../components/SignUp.vue';
-// import SignIn from '../components/SignIn.vue';
+import SignIn from '../components/SignIn.vue';
 
 export default {
   name: 'AuthView',
+  data() {
+    return {
+      changeForm: 'signUp',
+    };
+  },
   components: {
     SignUp,
-    // SignIn,
+    SignIn,
   },
   computed: {
     ...mapState(userStore, ['user']),
@@ -43,6 +48,10 @@ export default {
         password: 'pruebasignup',
       };
       this.signIn(userData.email, userData.password);
+    },
+    modifyForm(value) {
+      this.changeForm = value;
+      console.log(value);
     },
   },
 };

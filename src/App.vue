@@ -25,17 +25,4 @@ body {
   text-align: center;
   color: #FFFF00;
 }
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #FFFF00;
-}
-
-nav a.router-link-exact-active {
-  color: #FFFF00;
-}
 </style>

@@ -3,15 +3,16 @@
     <h2><b>Sign Up</b></h2>
     <form class="form" method="post" @submit.prevent="handleSignUp">
       <label for="email">Email:
-        <input type="email" v-model="emailValue" placeholder="Your email" required>
+        <input type="email" v-model="emailValue" placeholder="Your email">
       </label>
       <label for="password">Password:
-        <input type="password" v-model="passwordValue" placeholder="********" required>
+        <input type="password" v-model="passwordValue" placeholder="********">
       </label>
       <label for="password">Confirm your Password:
         <input type="password" v-model="passwordValue" placeholder="********">
       </label>
       <div v-if="passwordError">{{ passwordError }}</div>
+      <button @click="goToSignIn">Already a user? Sign In</button>
     </form>
   </div>
 </template>
@@ -24,6 +25,11 @@ export default {
       email: '',
       password: '',
     };
+  },
+  methods: {
+    goToSignIn() {
+      this.$emit('modifyChangeForm', 'signIn');
+    },
   },
 };
 </script>
