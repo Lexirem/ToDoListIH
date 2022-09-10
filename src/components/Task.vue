@@ -39,7 +39,7 @@ export default {
     ...mapState(taskStore, ['task']),
   },
   methods: {
-    ...mapActions(taskStore, ['fetchTasks', 'createTask(task)']),
+    ...mapActions(taskStore, ['fetchTasks', 'createTask(task)', 'updateTask(taskId)']),
     getTasks() {
       this.fetchTasks();
       console.log(this.tasks);
