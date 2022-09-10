@@ -9,12 +9,29 @@
         <input type="password" name="password" placeholder="********">
       </label>
     </form>
+    <button @click="handleSignIn">Sign In</button>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'pinia';
+import userStore from '@/store/user';
+
 export default {
   name: 'singIn',
+  computed: {
+    ...mapState(userStore, ['user']),
+  },
+  methods: {
+    ...mapActions(userStore, ['signIn']),
+    handleSignIn() {
+      const userData = {
+        email: 'me.vallribera@gmail.com',
+        password: 'pruebasignup',
+      };
+      this.signIn(userData.email, userData.password);
+    },
+  },
 };
 </script>
 

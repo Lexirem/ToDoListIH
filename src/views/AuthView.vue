@@ -4,7 +4,6 @@
     <SignUp v-if=" changeForm == 'signUp' " @modifyChangeForm="modifyForm" />
     <SignIn v-if=" changeForm == 'signIn' "/>
     <button @click="handleSignUp">Sign Up</button>
-    <!-- <button @click="handleSignIn">Sign In</button> -->
   </div>
 </template>
 
@@ -29,7 +28,7 @@ export default {
     ...mapState(userStore, ['user']),
   },
   methods: {
-    ...mapActions(userStore, ['signUp', 'signIn']),
+    ...mapActions(userStore, ['signUp']),
     handleSignUp() {
       const userData = {
         email: this.emailValue,
@@ -41,13 +40,6 @@ export default {
         console.log(this.passwordValue);
       }
       this.signUp(userData.email, userData.password);
-    },
-    handleSignIn() {
-      const userData = {
-        email: 'me.vallribera@gmail.com',
-        password: 'pruebasignup',
-      };
-      this.signIn(userData.email, userData.password);
     },
     modifyForm(value) {
       this.changeForm = value;
