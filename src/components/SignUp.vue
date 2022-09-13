@@ -3,13 +3,13 @@
     <h2><b>Sign Up</b></h2>
     <form class="form" method="post" @submit.prevent="handleSignUp">
       <label for="email">Email:
-        <input type="email" v-model="email" placeholder="Your email">
+        <input type="email" v-model="email" placeholder="Your email" required>
       </label>
       <label for="password">Password:
-        <input type="password" v-model="password" placeholder="********">
+        <input type="password" v-model="password" placeholder="********" required>
       </label>
       <label for="password">Confirm your Password:
-        <input type="password" v-model="confirmPassword" placeholder="********">
+        <input type="password" v-model="confirmPassword" placeholder="********" required>
       </label>
       <div v-if="passwordError">{{ passwordError }}</div>
       <button @click.prevent="goToSignIn">Already a user? Sign In</button>
@@ -37,13 +37,17 @@ export default {
   methods: {
     ...mapActions(userStore, ['signUp']),
     handleSignUp() {
-      this.signUp(this.email, this.password, this.confirmPassword);
-      this.confirmPassword === this.password;
-      this.passwordError = this.password.length > 6 ? '' : 'Password should have more than 6 characters';
+      if (this.confirmPassword === !this.password) {
+        alert('Please, confirm the password');
+      }
+      if (this.password.length < 6) {
+        this.passwordError = 'Password should have more than 6 characters';
+      }
       if (!this.passwordError) {
         console.log(this.email);
         console.log(this.password);
       }
+      this.signUp(this.email, this.password);
     },
     goToSignIn() {
       this.$emit('modifyChangeForm', 'signIn');
