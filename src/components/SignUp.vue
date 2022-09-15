@@ -29,6 +29,7 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
+      passwordError: null,
     };
   },
   computed: {
@@ -37,17 +38,27 @@ export default {
   methods: {
     ...mapActions(userStore, ['signUp']),
     handleSignUp() {
-      if (this.confirmPassword === !this.password) {
+      const validateEmail = (email) => String(email)
+        .toLowerCase()
+        .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+      if (!validateEmail(this.email)) {
+        alert('Enter a validate Email');
+        return;
+      }
+
+      if (this.confirmPassword !== this.password) {
         alert('Please, confirm the password');
+        return;
       }
-      if (this.password.length < 6) {
-        this.passwordError = 'Password should have more than 6 characters';
-      }
-      if (!this.passwordError) {
+
+      this.passwordError = this.password.length < 6 ? 'Password should have more than 6 characters' : null;
+
+      if (this.passwordError === null) {
         console.log(this.email);
         console.log(this.password);
+        this.signUp(this.email, this.password);
       }
-      this.signUp(this.email, this.password);
     },
     goToSignIn() {
       this.$emit('modifyChangeForm', 'signIn');
