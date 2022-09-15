@@ -1,8 +1,8 @@
 <template>
   <div>
     <nav v-if="user !== null">
-      <router-link to="/">Home</router-link> |
-      <button @click="signOut">Sign Out</button> |
+      <router-link to="/">Home</router-link>
+      <button @click="signOut">Sign Out</button>
     </nav>
   </div>
 </template>

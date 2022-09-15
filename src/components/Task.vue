@@ -6,16 +6,17 @@
       </label>
       <button type="submit" @click="addNewTask()">Add</button>
     </form>
-    <!-- <div :v-for="(task, index) in tasks" :key="index">
+    <h5 v-for="task in tasks" :key="task.id">{{ task.name }}</h5>
+    <div v-for="task in tasks" :key="task.id">
       <h5 :class="{'task-finished' : task.status === 'finished'}">{{ task.name }}</h5>
-      <div :class="{
+      <!-- <div :class="{
         'status-indicator-todo' : task.status === 'to-do',
         'status-indicator-ongoing' : task.status === 'on-going',
         'status-indicator-finished': task.status === 'finished',
       }">
           <h5>{{ task.status }}</h5>
-      </div>
-    </div> -->
+      </div> -->
+    </div>
     <!-- <button @click="editTask(index)">Edit Task</button>
     <button @click="deleteTask(index)">Delete</button> -->
   </div>
@@ -32,7 +33,7 @@ export default {
       newTask: '',
       indexEditTask: null,
       taskStatus: ['to-do', 'on-going', 'finished'],
-      tasks: [{ name: '', status: '' }],
+      tasks: [{ id: this.id, name: '', status: '' }],
     };
   },
   computed: {
@@ -56,7 +57,8 @@ export default {
         this.indexEditTask = null;
       }
       this.newTask = '';
-      console.log(this.newTask, 'hi');
+      // this.addNewTask.push(this.createTask(task));
+      console.log(this.newTask, 'esta es la task');
     },
     // editTask(index) {
     //   this.newTask = this.tasks[index].name;
