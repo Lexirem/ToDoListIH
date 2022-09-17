@@ -4,7 +4,7 @@ import supabase from '../supabase/index';
 
 export default defineStore('tasks', {
   state: () => ({
-    tasks: [],
+    tasks: [{}],
   }),
   actions: {
     async fetchTasks() {

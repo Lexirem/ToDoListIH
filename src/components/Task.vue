@@ -18,19 +18,15 @@
       <tbody v-for="(task, index) in tasks" :key="index">
         <tr>
           <td>
-            <h5 :class="{'task-finished' : task.status === 'finished'}">{{ task.name }}</h5>
+            <h5 :class="{'task-finished' : task.status === 'finished'}">{{ task.title }}</h5>
           </td>
-          <!-- <td><div :class="{
-            'status-indicator-todo' : task.status === 'to-do',
-            'status-indicator-ongoing' : task.status === 'on-going',
-            'status-indicator-finished': task.status === 'finished',
-          }">
+          <td><div>
               <h5>{{ task.status }}</h5>
-          </div></td> -->
+          </div></td>
           <td>
-            <button v-if="task.index == true" @click="editedTask(index)">Edit Task</button>
+            <button @click="editedTask(index)">Edit Task</button>
           </td>
-          <td><button v-if="task.index == true" @click="deleteTask(index)">Delete</button></td>
+          <td><button @click="deleteTask(index)">Delete</button></td>
         </tr>
       </tbody>
     </table>
@@ -44,14 +40,13 @@ import taskStore from '@/store/task';
 export default {
   name: 'TaskList',
   computed: {
-    ...mapState(taskStore, ['task']),
+    ...mapState(taskStore, ['tasks']),
   },
   data() {
     return {
       newTask: '',
       editTask: null,
       taskStatus: ['to-do', 'on-going', 'finished'],
-      tasks: [{ id: this.id, name: '', status: '' }],
     };
   },
   methods: {
@@ -64,19 +59,18 @@ export default {
       if (this.newTask.length === 0) return;
       if (this.editTask === null) {
         this.tasks.push({
-          name: this.newTask,
+          title: this.newTask,
           status: 'to-do',
         });
       } else {
-        this.tasks[this.editTask].name = this.newTask;
+        this.tasks[this.editTask].title = this.newTask;
         this.editTask = null;
       }
       this.newTask = '';
-      // this.addNewTask.push(this.createTask(task));
       console.log(this.newTask, 'esta es la task');
     },
     editedTask(index) {
-      this.newTask = this.tasks[index].name;
+      this.newTask = this.tasks[index].title;
       this.editTask = index;
     },
     deleteTask(index) {
@@ -99,6 +93,9 @@ export default {
   gap: 20px;
   margin-top: 30px;
   padding: 15px 15px;
+}
+thead > tr > td {
+  font-size: 20px;
 }
 td {
   width: 150px;
