@@ -28,5 +28,10 @@ export default {
 <style>
 .home {
   color: #FFFF00;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: auto;
 }
 </style>
