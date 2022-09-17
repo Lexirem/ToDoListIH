@@ -15,7 +15,7 @@
           <td><b>Delete</b></td>
         </tr>
       </thead>
-      <tbody v-for="(task, index) in tasks" :key="index">
+      <tbody v-for="(task, taskId) in tasks" :key="taskId">
         <tr>
           <td>
             <h5 :class="{'task-finished' : task.status === 'finished'}">{{ task.title }}</h5>
@@ -24,9 +24,9 @@
               <h5>{{ task.status }}</h5>
           </div></td>
           <td>
-            <button @click="editedTask(index)">Edit Task</button>
+            <button @click="editedTask(taskId)">Edit Task</button>
           </td>
-          <td><button @click="deleteTask(index)">Delete</button></td>
+          <td><button @click="deleteTask(taskId)">Delete</button></td>
         </tr>
       </tbody>
     </table>
@@ -69,12 +69,12 @@ export default {
       this.newTask = '';
       console.log(this.newTask, 'esta es la task');
     },
-    editedTask(index) {
-      this.newTask = this.tasks[index].title;
-      this.editTask = index;
+    editedTask(taskId) {
+      this.newTask = this.tasks[taskId].title;
+      this.editTask = taskId;
     },
-    deleteTask(index) {
-      this.tasks.splice(index, 1);
+    deleteTask(taskId) {
+      this.tasks.splice(taskId, 1);
     },
   },
 };
