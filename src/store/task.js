@@ -4,7 +4,7 @@ import supabase from '../supabase/index';
 
 export default defineStore('tasks', {
   state: () => ({
-    tasks: [{}],
+    tasks: [],
   }),
   actions: {
     async fetchTasks() {
@@ -15,6 +15,7 @@ export default defineStore('tasks', {
       this.tasks = tasks;
     },
     async createTask(task) {
+      console.log(task, 'hola');
       const { data, error } = await supabase
         .from('tasks')
         .insert(task);

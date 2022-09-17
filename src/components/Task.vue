@@ -1,10 +1,10 @@
 <template>
   <div class="toDoList">
-    <form @submit.prevent="addNewTask">
+    <form>
       <label for="task">
         <input type="text" name ="task" id="task" v-model="newTask" placeholder="Add a new Task"/>
       </label>
-      <button type="submit" @click="addNewTask()">Add</button>
+      <button type="submit" @click.prevent="addNewTask()">Add</button>
     </form>
     <table class="task-table">
       <thead>
@@ -36,36 +36,29 @@
 <script>
 import { mapState, mapActions } from 'pinia';
 import taskStore from '@/store/task';
+import userStore from '@/store/user';
 
 export default {
   name: 'TaskList',
   computed: {
     ...mapState(taskStore, ['tasks']),
+    ...mapState(userStore, ['user']),
   },
   data() {
     return {
       newTask: '',
-      editTask: null,
       taskStatus: ['to-do', 'on-going', 'finished'],
     };
   },
   methods: {
-    ...mapActions(taskStore, ['fetchTasks', 'createTask(task)', 'updateTask(taskId)']),
+    ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTask']),
     getTasks() {
       this.fetchTasks();
       console.log(this.tasks);
     },
     addNewTask() {
       if (this.newTask.length === 0) return;
-      if (this.editTask === null) {
-        this.tasks.push({
-          title: this.newTask,
-          status: 'to-do',
-        });
-      } else {
-        this.tasks[this.editTask].title = this.newTask;
-        this.editTask = null;
-      }
+      this.createTask({ title: this.newTask, user_id: this.user.id });
       this.newTask = '';
       console.log(this.newTask, 'esta es la task');
     },
