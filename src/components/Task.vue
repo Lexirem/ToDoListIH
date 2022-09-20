@@ -55,7 +55,6 @@ export default {
     ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTask']),
     getTasks() {
       this.fetchTasks();
-      console.log(this.tasks);
     },
     addNewTask() {
       if (this.newTask.length === 0) return;
@@ -66,15 +65,10 @@ export default {
         this.tasks[this.editedTask].title = this.newTask;
         this.editedTask = null;
       }
-      console.log(this.newTask, 'esta es la task');
     },
     editTask(taskId) {
       this.newTask = this.tasks[taskId].title;
       this.editedTask = taskId;
-      console.log(taskId);
-      // this.updateTask({ title: this.editedTask(taskId) });
-      // this.fetchTasks(taskId);
-      // this.editedTask(taskId) = this.newTask.title;
     },
     deleteTask(taskId) {
       this.tasks.splice(taskId, 1);
