@@ -26,7 +26,7 @@
           <td>
             <button @click="editTask(taskId)">Edit Task</button>
           </td>
-          <td><button @click="deleteTask(taskId)">Delete</button></td>
+          <td><button @click="deletedTask(taskId)">Delete</button></td>
         </tr>
       </tbody>
     </table>
@@ -52,7 +52,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTask']),
+    ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTask', 'deleteTask']),
     getTasks() {
       this.fetchTasks();
       console.log(this.tasks);
@@ -72,12 +72,10 @@ export default {
       this.newTask = this.tasks[taskId].title;
       this.editedTask = taskId;
       console.log(taskId);
-      // this.updateTask({ title: this.editedTask(taskId) });
-      // this.fetchTasks(taskId);
-      // this.editedTask(taskId) = this.newTask.title;
     },
-    deleteTask(taskId) {
-      this.tasks.splice(taskId, 1);
+    deletedTask(taskId) {
+      // this.tasks.splice(taskId, 1);
+      this.deleteTask(taskId);
     },
   },
 };

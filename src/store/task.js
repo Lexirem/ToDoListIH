@@ -36,5 +36,24 @@ export default defineStore('tasks', {
         this.tasks.push(data[0]);
       }
     },
+    async deleteTask(taskId) {
+      try {
+        const { data, error } = await supabase
+          .from('tasks')
+          .delete()
+          .match({ id: taskId });
+        if (error) throw error;
+        if (data && data.length) {
+          const taskToRemoveIndex = this.tasks.findIndex((task) => task.id === taskId);
+          this.tasks = this.tasks.splice(taskToRemoveIndex, 1);
+        } else {
+          throw new Error('Task not found');
+        }
+        return data;
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    },
   },
 });
