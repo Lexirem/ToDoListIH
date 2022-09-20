@@ -24,7 +24,7 @@
               <h5>{{ task.status }}</h5>
           </div></td>
           <td>
-            <button @click="editedTask(taskId)">Edit Task</button>
+            <button @click="editTask(taskId)">Edit Task</button>
           </td>
           <td><button @click="deleteTask(taskId)">Delete</button></td>
         </tr>
@@ -47,6 +47,7 @@ export default {
   data() {
     return {
       newTask: '',
+      editedTask: null,
       taskStatus: ['to-do', 'on-going', 'finished'],
     };
   },
@@ -58,13 +59,22 @@ export default {
     },
     addNewTask() {
       if (this.newTask.length === 0) return;
-      this.createTask({ title: this.newTask, user_id: this.user.id });
-      this.newTask = '';
+      if (this.editedTask === null) {
+        this.createTask({ title: this.newTask, user_id: this.user.id });
+        this.newTask = '';
+      } else {
+        this.tasks[this.editedTask].title = this.newTask;
+        this.editedTask = null;
+      }
       console.log(this.newTask, 'esta es la task');
     },
-    editedTask(taskId) {
+    editTask(taskId) {
       this.newTask = this.tasks[taskId].title;
-      this.editTask = taskId;
+      this.editedTask = taskId;
+      console.log(taskId);
+      // this.updateTask({ title: this.editedTask(taskId) });
+      // this.fetchTasks(taskId);
+      // this.editedTask(taskId) = this.newTask.title;
     },
     deleteTask(taskId) {
       this.tasks.splice(taskId, 1);
