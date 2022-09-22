@@ -24,35 +24,29 @@ export default defineStore('tasks', {
         this.tasks.push(data[0]);
       }
     },
-    async updateTask(taskId) {
-      const updateTaskId = this.tasks.map((item) => item.id).indexOf(taskId);
-      const updatedTask = this.tasks[updateTaskId];
+    async updateTitleTask({ title, taskId }) {
       const { data, error } = await supabase
         .from('tasks')
-        .update({ title: updatedTask.title, status: updatedTask.status })
+        .update({ title })
         .match({ id: taskId });
       if (error) throw error;
       else {
-        this.tasks.push(data[0]);
+        const updateTaskId = this.tasks.map((item) => item.id).indexOf(taskId);
+        const updatedTask = this.tasks[updateTaskId];
+        updatedTask.title = data[0].title;
       }
     },
     async deleteTask(taskId) {
-      try {
-        const { data, error } = await supabase
-          .from('tasks')
-          .delete()
-          .match({ id: taskId });
-        if (error) throw error;
-        if (data && data.length) {
-          const taskToRemoveIndex = this.tasks.findIndex((task) => task.id === taskId);
-          this.tasks = this.tasks.splice(taskToRemoveIndex, 1);
-        } else {
-          throw new Error('Task not found');
-        }
-        return data;
-      } catch (error) {
-        console.log(error);
-        return null;
+      const { data, error } = await supabase
+        .from('tasks')
+        .delete()
+        .match({ id: taskId });
+      if (error) throw error;
+      if (data && data.length) {
+        const taskToRemoveIndex = this.tasks.findIndex((task) => task.id === taskId);
+        this.tasks.splice(taskToRemoveIndex, 1);
+      } else {
+        throw new Error('Task not found');
       }
     },
   },

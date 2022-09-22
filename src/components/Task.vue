@@ -4,7 +4,8 @@
       <label for="task">
         <input type="text" name ="task" id="task" v-model="newTask" placeholder="Add a new Task"/>
       </label>
-      <button type="submit" @click.prevent="addNewTask()">Add</button>
+      <button @click.prevent="editTask()" v-if="isEditing">Save Changes</button>
+      <button @click.prevent="addNewTask()" v-else>Add</button>
     </form>
     <table class="task-table">
       <thead>
@@ -15,18 +16,20 @@
           <td><b>Delete</b></td>
         </tr>
       </thead>
-      <tbody v-for="(task, taskId) in tasks" :key="taskId">
+      <tbody v-for="task in tasks" :key="task.id">
         <tr>
           <td>
-            <h5 :class="{'task-finished' : task.status === 'finished'}">{{ task.title }}</h5>
+            <h5>{{ task.title }}</h5>
           </td>
-          <td><div>
-              <h5>{{ task.status }}</h5>
-          </div></td>
           <td>
-            <button @click="editTask(taskId)">Edit Task</button>
+            <div>
+              <h5>{{ task.status }}</h5>
+            </div>
           </td>
-          <td><button @click="deletedTask(taskId)">Delete</button></td>
+          <td>
+            <button @click.prevent="handleEditTask(task.id, task.title)">Edit Task</button>
+          </td>
+          <td><button @click.prevent="deletedTask(task.id)">Delete</button></td>
         </tr>
       </tbody>
     </table>
@@ -47,35 +50,45 @@ export default {
   data() {
     return {
       newTask: '',
-      editedTask: null,
+      isEditing: false,
+      taskEditingId: -1,
       taskStatus: ['to-do', 'on-going', 'finished'],
     };
   },
   methods: {
-    ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTask', 'deleteTask']),
+    ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTitleTask', 'deleteTask']),
+
     getTasks() {
       this.fetchTasks();
       console.log(this.tasks);
     },
+
     addNewTask() {
       if (this.newTask.length === 0) return;
-      if (this.editedTask === null) {
-        this.createTask({ title: this.newTask, user_id: this.user.id });
-        this.newTask = '';
-      } else {
-        this.tasks[this.editedTask].title = this.newTask;
-        this.editedTask = null;
-      }
+      this.createTask({ title: this.newTask, user_id: this.user.id });
+      this.newTask = '';
       console.log(this.newTask, 'esta es la task');
     },
-    editTask(taskId) {
-      this.newTask = this.tasks[taskId].title;
-      this.editedTask = taskId;
-      console.log(taskId);
+
+    editTask() {
+      // console.log(taskId);
+      this.updateTitleTask({ title: this.newTask, taskId: this.taskEditingId });
+      this.newTask = '';
+      this.isEditing = false;
+      this.taskEditingId = -1;
     },
+    handleEditTask(taskId, title) {
+      this.newTask = title;
+      this.isEditing = true;
+      this.taskEditingId = taskId;
+    },
+
     deletedTask(taskId) {
-      // this.tasks.splice(taskId, 1);
-      this.deleteTask(taskId);
+      try {
+        this.deleteTask(taskId);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
