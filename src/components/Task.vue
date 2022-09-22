@@ -22,8 +22,22 @@
             <h5>{{ task.title }}</h5>
           </td>
           <td>
-            <div>
-              <h5>{{ task.status }}</h5>
+            <div class="status">
+              <label for="checkbox">
+                <input type="checkbox" value="completed" v-model="taskStatus">
+                <span><img src="@/assets/aliance.png" alt="logo alianza"></span>
+              </label>
+              <label for="status">
+                <input type="checkbox" value="failed" v-model="taskStatus">
+                <span><img src="@/assets/imperio.png" alt="logo imperio"></span>
+              </label>
+              <!-- <label for="taskStatus">
+              {{ task.is_complete ? "`${src='@/assets/aliance.png'}`" :
+              "`${src='@/assets/imperio.png'}`" }}
+              <input @click="handleStatus(task.id,!task.is_complete"
+              type="checkbox"name="taskStatus"
+              v-model="task.is_complete"/>
+              </label> -->
             </div>
           </td>
           <td>
@@ -52,11 +66,12 @@ export default {
       newTask: '',
       isEditing: false,
       taskEditingId: -1,
-      taskStatus: ['to-do', 'on-going', 'finished'],
+      taskStatus: [],
+      // taskStatus: ['completed', 'failed'],
     };
   },
   methods: {
-    ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTitleTask', 'deleteTask']),
+    ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTitleTask', 'updateStatus', 'deleteTask']),
 
     getTasks() {
       this.fetchTasks();
@@ -71,16 +86,20 @@ export default {
     },
 
     editTask() {
-      // console.log(taskId);
       this.updateTitleTask({ title: this.newTask, taskId: this.taskEditingId });
       this.newTask = '';
       this.isEditing = false;
       this.taskEditingId = -1;
     },
+
     handleEditTask(taskId, title) {
       this.newTask = title;
       this.isEditing = true;
       this.taskEditingId = taskId;
+    },
+
+    handleStatus() {
+      this.updateStatus({ taskId: this.taskEditingId, status: this.taskStatus });
     },
 
     deletedTask(taskId) {
@@ -114,7 +133,20 @@ thead > tr > td {
 td {
   width: 150px;
 }
-.task-finished {
-  text-decoration: line-through;
+.status {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-around;
+}
+.status > label > input {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  cursor: pointer;
+}
+.status > label > span > img {
+  height: 30px;
+  width: 30px;
 }
 </style>

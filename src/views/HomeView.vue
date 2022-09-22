@@ -2,6 +2,8 @@
   <div class="home">
     <h1>Welcome to your Work List</h1>
     <Task />
+    <h3>If you completed your mission: Join the Alliance</h3>
+    <h3>If you faild your mission: The Empire took you prisoner</h3>
   </div>
 </template>
 

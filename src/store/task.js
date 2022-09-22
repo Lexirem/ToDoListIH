@@ -36,6 +36,18 @@ export default defineStore('tasks', {
         updatedTask.title = data[0].title;
       }
     },
+    async updateStatus({ status, taskId }) {
+      const { data, error } = await supabase
+        .from('tasks')
+        .update({ status })
+        .match({ id: taskId });
+      if (error) throw error;
+      else {
+        const updateTaskId = this.tasks.map((item) => item.id).indexOf(taskId);
+        const updatedTask = this.tasks[updateTaskId];
+        updatedTask.status = data[0].status;
+      }
+    },
     async deleteTask(taskId) {
       const { data, error } = await supabase
         .from('tasks')
