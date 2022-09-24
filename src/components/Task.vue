@@ -16,7 +16,7 @@
           <td><b>Delete</b></td>
         </tr>
       </thead>
-      <tbody v-for="task in tasks" :key="task.id">
+      <tbody v-for="(task, index) in tasks" :key="task.id">
         <tr>
           <td>
             <h5>{{ task.title }}</h5>
@@ -24,20 +24,13 @@
           <td>
             <div class="status">
               <label for="checkbox">
-                <input type="checkbox" value="completed" v-model="taskStatus">
-                <span><img src="@/assets/aliance.png" alt="logo alianza"></span>
+                <input type="checkbox" v-model="statusArr[index]">
               </label>
-              <label for="status">
-                <input type="checkbox" value="failed" v-model="taskStatus">
-                <span><img src="@/assets/imperio.png" alt="logo imperio"></span>
-              </label>
-              <!-- <label for="taskStatus">
-              {{ task.is_complete ? "`${src='@/assets/aliance.png'}`" :
-              "`${src='@/assets/imperio.png'}`" }}
-              <input @click="handleStatus(task.id,!task.is_complete"
-              type="checkbox"name="taskStatus"
-              v-model="task.is_complete"/>
-              </label> -->
+              <!-- eslint-disable-next-line -->
+              <img src="@/assets/aliance.png" alt="logo alianza" @click="handleStatus(task.id,true, index)" :class="{ isSelected: statusArr[index] }">
+              <!-- eslint-disable-next-line -->
+              <img src="@/assets/imperio.png" alt="logo imperio" @click="handleStatus(task.id, false, index)" :class="{ isSelected: !statusArr[index] }">
+              {{ statusArr[index] }}
             </div>
           </td>
           <td>
@@ -58,7 +51,7 @@ import userStore from '@/store/user';
 export default {
   name: 'TaskList',
   computed: {
-    ...mapState(taskStore, ['tasks']),
+    ...mapState(taskStore, ['tasks', 'statusList']),
     ...mapState(userStore, ['user']),
   },
   data() {
@@ -66,17 +59,16 @@ export default {
       newTask: '',
       isEditing: false,
       taskEditingId: -1,
-      taskStatus: [],
-      // taskStatus: ['completed', 'failed'],
+      taskStatus: false,
+      statusArr: [],
     };
+  },
+  async created() {
+    await this.fetchTasks();
+    this.statusArr = this.tasks.map((task) => task.is_complete);
   },
   methods: {
     ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTitleTask', 'updateStatus', 'deleteTask']),
-
-    getTasks() {
-      this.fetchTasks();
-      console.log(this.tasks);
-    },
 
     addNewTask() {
       if (this.newTask.length === 0) return;
@@ -98,8 +90,9 @@ export default {
       this.taskEditingId = taskId;
     },
 
-    handleStatus() {
-      this.updateStatus({ taskId: this.taskEditingId, status: this.taskStatus });
+    handleStatus(taskId, status, index) {
+      this.statusArr[index] = status;
+      this.updateStatus({ taskId, status });
     },
 
     deletedTask(taskId) {
@@ -145,7 +138,10 @@ td {
   width: 0;
   cursor: pointer;
 }
-.status > label > span > img {
+.isSelected {
+  border: 1px solid #FFFF00;
+}
+.status > img {
   height: 30px;
   width: 30px;
 }

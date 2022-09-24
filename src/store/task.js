@@ -14,6 +14,7 @@ export default defineStore('tasks', {
         .order('id', { ascending: false });
       this.tasks = tasks;
     },
+
     async createTask(task) {
       console.log(task, 'hola');
       const { data, error } = await supabase
@@ -37,9 +38,10 @@ export default defineStore('tasks', {
       }
     },
     async updateStatus({ status, taskId }) {
+      console.log(status, taskId);
       const { data, error } = await supabase
         .from('tasks')
-        .update({ status })
+        .update({ is_complete: status })
         .match({ id: taskId });
       if (error) throw error;
       else {
