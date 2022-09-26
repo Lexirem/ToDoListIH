@@ -16,14 +16,21 @@
           <td><b>Delete</b></td>
         </tr>
       </thead>
-      <tbody v-for="task in tasks" :key="task.id">
+      <tbody v-for="(task, index) in tasks" :key="task.id">
         <tr>
           <td>
             <h5>{{ task.title }}</h5>
           </td>
           <td>
-            <div>
-              <h5>{{ task.status }}</h5>
+            <div class="status">
+              <label for="checkbox">
+                <input type="checkbox" v-model="statusArr[index]">
+              </label>
+              <!-- eslint-disable-next-line -->
+              <img src="@/assets/aliance.png" alt="logo alianza" @click="handleStatus(task.id,true, index)" :class="{ isCompleted: statusArr[index] }">
+              <!-- eslint-disable-next-line -->
+              <img src="@/assets/imperio.png" alt="logo imperio" @click="handleStatus(task.id, false, index)" :class="{ isFailed: !statusArr[index] }">
+              {{ statusArr[index] }}
             </div>
           </td>
           <td>
@@ -44,7 +51,7 @@ import userStore from '@/store/user';
 export default {
   name: 'TaskList',
   computed: {
-    ...mapState(taskStore, ['tasks']),
+    ...mapState(taskStore, ['tasks', 'statusList']),
     ...mapState(userStore, ['user']),
   },
   data() {
@@ -52,15 +59,16 @@ export default {
       newTask: '',
       isEditing: false,
       taskEditingId: -1,
-      taskStatus: ['to-do', 'on-going', 'finished'],
+      taskStatus: false,
+      statusArr: [],
     };
   },
+  async created() {
+    await this.fetchTasks();
+    this.statusArr = this.tasks.map((task) => task.is_complete);
+  },
   methods: {
-    ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTitleTask', 'deleteTask']),
-
-    getTasks() {
-      this.fetchTasks();
-    },
+    ...mapActions(taskStore, ['fetchTasks', 'createTask', 'updateTitleTask', 'updateStatus', 'deleteTask']),
 
     addNewTask() {
       if (this.newTask.length === 0) return;
@@ -80,6 +88,11 @@ export default {
       this.newTask = title;
       this.isEditing = true;
       this.taskEditingId = taskId;
+    },
+
+    handleStatus(taskId, status, index) {
+      this.statusArr[index] = status;
+      this.updateStatus({ taskId, status });
     },
 
     deletedTask(taskId) {
@@ -113,7 +126,26 @@ thead > tr > td {
 td {
   width: 150px;
 }
-.task-finished {
-  text-decoration: line-through;
+.status {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-around;
+}
+.status > label > input {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  cursor: pointer;
+}
+.isCompleted {
+  border: 1px solid #FFFF00;
+}
+.isFailed {
+  border: 1px solid #FF0000;
+}
+.status > img {
+  height: 30px;
+  width: 30px;
 }
 </style>

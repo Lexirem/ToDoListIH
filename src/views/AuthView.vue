@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Esta es la pagina de SignUp-SingIn</h1>
+    <h1>Welcome, please SignUp</h1>
     <SignUp v-if=" changeForm == 'signUp' " @modifyChangeForm="modifyForm" />
     <SignIn v-if=" changeForm == 'signIn' "/>
   </div>

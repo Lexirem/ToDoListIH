@@ -14,6 +14,7 @@ export default defineStore('tasks', {
         .order('id', { ascending: false });
       this.tasks = tasks;
     },
+
     async createTask(task) {
       console.log(task, 'hola');
       const { data, error } = await supabase
@@ -34,6 +35,19 @@ export default defineStore('tasks', {
         const updateTaskId = this.tasks.map((item) => item.id).indexOf(taskId);
         const updatedTask = this.tasks[updateTaskId];
         updatedTask.title = data[0].title;
+      }
+    },
+    async updateStatus({ status, taskId }) {
+      console.log(status, taskId);
+      const { data, error } = await supabase
+        .from('tasks')
+        .update({ is_complete: status })
+        .match({ id: taskId });
+      if (error) throw error;
+      else {
+        const updateTaskId = this.tasks.map((item) => item.id).indexOf(taskId);
+        const updatedTask = this.tasks[updateTaskId];
+        updatedTask.status = data[0].status;
       }
     },
     async deleteTask(taskId) {

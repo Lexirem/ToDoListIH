@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <h1>Welcome to your Work List</h1>
+    <h1>Enter your Mission to the List</h1>
     <Task />
+    <h3>If you completed your mission: Join the Alliance</h3>
+    <h3>If you failed your mission: The Empire took you prisoner</h3>
   </div>
 </template>
 
@@ -19,8 +21,8 @@ export default {
   methods: {
     ...mapActions(taskStore, ['fetchTasks']),
   },
-  created() {
-    this.fetchTasks();
+  async created() {
+    await this.fetchTasks();
   },
 };
 </script>
