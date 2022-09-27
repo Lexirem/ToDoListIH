@@ -73,7 +73,6 @@ export default {
       if (this.newTask.length === 0) return;
       this.createTask({ title: this.newTask, user_id: this.user.id });
       this.newTask = '';
-      console.log(this.newTask, 'esta es la task');
     },
 
     editTask() {

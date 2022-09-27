@@ -55,8 +55,6 @@ export default {
       this.passwordError = this.password.length < 6 ? 'Password should have more than 6 characters' : null;
 
       if (this.passwordError === null) {
-        console.log(this.email);
-        console.log(this.password);
         this.signUp(this.email, this.password);
       }
     },
@@ -69,17 +67,17 @@ export default {
 
 <style>
 .auth {
-  border: 1px solid #fff;
-  border-radius: 15%;
+  /* border: 1px solid #FFFF00;
+  border-radius: 15%; */
   width: 400px;
-  height: 200px;
-  margin-left: 360px;
-  padding-bottom: 30px;
+  height: 250px;
+  padding: 20px 30px 60px 30px;
 }
 .form {
   display: flex;
   flex-direction: column;
   margin-left: 30px;
-  gap: 10px;
+  gap: 20px;
+  margin-bottom: 15px;
 }
 </style>

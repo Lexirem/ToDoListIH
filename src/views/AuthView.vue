@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Welcome, please SignUp</h1>
+  <div class="authView">
+    <h1>Welcome Force User...</h1>
     <SignUp v-if=" changeForm == 'signUp' " @modifyChangeForm="modifyForm" />
     <SignIn v-if=" changeForm == 'signIn' "/>
   </div>
@@ -29,3 +29,15 @@ export default {
   },
 };
 </script>
+
+<style>
+.authView {
+  color: #FFFF00;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  margin-top: 100px;
+}
+</style>

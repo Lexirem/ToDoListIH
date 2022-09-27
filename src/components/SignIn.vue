@@ -38,18 +38,5 @@ export default {
 </script>
 
 <style>
-.auth {
-  border: 1px solid black;
-  border-radius: 15%;
-  width: 400px;
-  height: 200px;
-  margin-left: 360px;
-  padding-bottom: 30px;
-}
-.form {
-  display: flex;
-  flex-direction: column;
-  margin-left: 30px;
-  gap: 10px;
-}
+
 </style>
