@@ -15,6 +15,9 @@ export default {
 </script>
 
 <style>
+*{
+  cursor: url('../src/assets/pngwing.com.png'), auto;
+}
 body {
   background-image: url('../src/assets/star-wars-backgrounds-25.jpeg');
 }
