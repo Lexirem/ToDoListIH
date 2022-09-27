@@ -30,7 +30,6 @@
               <img src="@/assets/aliance.png" alt="logo alianza" @click="handleStatus(task.id,true, index)" :class="{ isCompleted: statusArr[index] }">
               <!-- eslint-disable-next-line -->
               <img src="@/assets/imperio.png" alt="logo imperio" @click="handleStatus(task.id, false, index)" :class="{ isFailed: !statusArr[index] }">
-              {{ statusArr[index] }}
             </div>
           </td>
           <td>
@@ -113,7 +112,7 @@ export default {
 }
 .task-table {
   border: 2px solid #FFFF00;
-  background-color: rgba(255, 255, 0, 0.1);
+  background-color: rgba(255, 255, 0, 0.2);
   color: #fff;
   width: 100%;
   gap: 20px;
@@ -139,10 +138,10 @@ td {
   cursor: pointer;
 }
 .isCompleted {
-  border: 1px solid #FFFF00;
+  background-color: #FFFF00;
 }
 .isFailed {
-  border: 1px solid #FF0000;
+  background-color: #FF0000;
 }
 .status > img {
   height: 30px;
