@@ -12,7 +12,7 @@
         <input type="password" v-model="confirmPassword" placeholder="********" required>
       </label>
       <div v-if="passwordError">{{ passwordError }}</div>
-      <button @click.prevent="goToSignIn">Already a user? Sign In</button>
+      <button @click.prevent="goToSignIn">Already a Revel? Sign In</button>
       <button @click.prevent="handleSignUp">Sign Up</button>
     </form>
   </div>
@@ -67,8 +67,6 @@ export default {
 
 <style>
 .auth {
-  /* border: 1px solid #FFFF00;
-  border-radius: 15%; */
   width: 400px;
   height: 250px;
   padding: 20px 30px 60px 30px;

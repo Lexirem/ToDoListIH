@@ -24,7 +24,6 @@ export default {
   methods: {
     modifyForm(value) {
       this.changeForm = value;
-      console.log(value);
     },
   },
 };

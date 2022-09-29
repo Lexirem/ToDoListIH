@@ -35,7 +35,9 @@
           <td>
             <button @click.prevent="handleEditTask(task.id, task.title)">Edit Task</button>
           </td>
-          <td><button @click.prevent="deletedTask(task.id)">Delete</button></td>
+          <td>
+            <button @click.prevent="deletedTask(task.id)">Delete</button>
+          </td>
         </tr>
       </tbody>
     </table>

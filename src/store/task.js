@@ -16,7 +16,6 @@ export default defineStore('tasks', {
     },
 
     async createTask(task) {
-      console.log(task, 'hola');
       const { data, error } = await supabase
         .from('tasks')
         .insert(task);
@@ -38,7 +37,6 @@ export default defineStore('tasks', {
       }
     },
     async updateStatus({ status, taskId }) {
-      console.log(status, taskId);
       const { data, error } = await supabase
         .from('tasks')
         .update({ is_complete: status })
